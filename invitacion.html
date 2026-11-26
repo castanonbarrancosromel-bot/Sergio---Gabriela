@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Boda Sergio &amp; Gabriela · 09·01·2027</title>
+
+  <!-- ═══════════════════════════════════════════════════
+       FUENTES DE GOOGLE FONTS
+  ═══════════════════════════════════════════════════ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Marcellus&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ════════════════════════════════════════════════════
+       VARIABLES GLOBALES — PALETA Y TIPOGRAFÍAS
+    ════════════════════════════════════════════════════ */
+    :root {
+      --terracota:      #A2481B;
+      --terracota-dark: #7a3413;
+      --terracota-lt:   #c05a24;
+      --beige:          #D1B69D;
+      --beige-35:       rgba(209, 182, 157, 0.35);
+      --crema:          #F8F2E8;
+      --crema-lt:       #FFFAF2;
+      --texto:          #4A2410;
+
+      --font-title:  'Marcellus', serif;
+      --font-body:   'Lora', serif;
+      --font-script: 'Alex Brush', cursive;
+
+      /* ── FOTO DE LA PAREJA — cambia solo esta URL ── */
+      --foto-pareja: url('foto-pareja.jpg');  /* <!-- reemplazar --> */
+    }
+
+    /* ════════════════════════════════════════════════════
+       RESET Y BASE
+    ════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--crema);
+      color: var(--texto);
+      font-family: var(--font-body);
+      font-size: clamp(15px, 4vw, 17px);
+      overflow-x: hidden;
+      /* safe-area iPhone */
+      padding-left:  env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+
+    /* ════════════════════════════════════════════════════
+       UTILIDADES
+    ════════════════════════════════════════════════════ */
+    .text-script  { font-family: var(--font-script); }
+    .text-title   { font-family: var(--font-title); }
+    .text-body    { font-family: var(--font-body); }
+    .text-terra   { color: var(--terracota); }
+    .text-crema   { color: var(--crema); }
+    .text-center  { text-align: center; }
+
+    a { color: inherit; }
+
+    /* ════════════════════════════════════════════════════
+       ANIMACIÓN DE APARICIÓN AL HACER SCROLL
+    ════════════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ════════════════════════════════════════════════════
+       BOTÓN FLOTANTE — CANCIÓN
+    ════════════════════════════════════════════════════ */
+    #btn-musica {
+      position: fixed;
+      top: max(16px, env(safe-area-inset-top, 16px));
+      right: 16px;
+      z-index: 1000;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--terracota);
+      color: var(--crema);
+      border: 2px solid var(--beige);
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(162,72,27,.4);
+      transition: transform .2s, background .2s;
+    }
+    #btn-musica:hover { transform: scale(1.1); background: var(--terracota-dark); }
+
+    /* ════════════════════════════════════════════════════
+       §1 PORTADA CON SOBRE
+    ════════════════════════════════════════════════════ */
+    #portada {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: linear-gradient(160deg, var(--crema-lt) 0%, var(--crema) 60%, #ede4d5 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      transition: opacity 0.8s ease;
+    }
+    #portada.oculta { opacity: 0; pointer-events: none; }
+
+    #portada-label {
+      font-family: var(--font-title);
+      letter-spacing: .35em;
+      font-size: clamp(12px, 3.5vw, 15px);
+      color: var(--terracota);
+    }
+
+    /* Sobre CSS */
+    .sobre-wrap {
+      position: relative;
+      width: min(320px, 85vw);
+      height: min(220px, 58vw);
+      perspective: 800px;
+    }
+
+    .sobre-cuerpo {
+      position: absolute;
+      inset: 0;
+      background: var(--terracota);
+      border-radius: 4px 4px 10px 10px;
+      box-shadow: 0 10px 40px rgba(162,72,27,.35);
+      overflow: visible;
+    }
+
+    /* Triángulos laterales (decorativos) */
+    .sobre-cuerpo::before,
+    .sobre-cuerpo::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 50%;
+      height: 55%;
+      background: var(--terracota-dark);
+    }
+    .sobre-cuerpo::before { left: 0;  clip-path: polygon(0 100%, 100% 100%, 0 0); }
+    .sobre-cuerpo::after  { right: 0; clip-path: polygon(0 100%, 100% 100%, 100% 0); }
+
+    /* Triángulo inferior */
+    .sobre-base {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 55%;
+      clip-path: polygon(0 100%, 50% 0%, 100% 100%);
+      background: var(--terracota-dark);
+    }
+
+    /* Solapa superior — se abre con rotateX */
+    .sobre-solapa {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 55%;
+      clip-path: polygon(0 0, 50% 100%, 100% 0);
+      background: var(--terracota-lt);
+      transform-origin: top center;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(.4,0,.2,1);
+      z-index: 2;
+    }
+    .sobre-solapa.abierta { transform: rotateX(-180deg); }
+
+    /* Carta dentro del sobre */
+    .sobre-carta {
+      position: absolute;
+      left: 10%; right: 10%;
+      bottom: 8%;
+      height: 75%;
+      background: var(--crema);
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      z-index: 1;
+      transition: transform 0.5s ease 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,.12);
+      padding: 8px;
+    }
+    .sobre-carta.elevada { transform: translateY(-28px); }
+
+    .carta-nombres {
+      font-family: var(--font-script);
+      font-size: clamp(18px, 5vw, 26px);
+      color: var(--terracota);
+      line-height: 1.1;
+      text-align: center;
+    }
+    .carta-para {
+      font-family: var(--font-body);
+      font-size: clamp(9px, 2.5vw, 11px);
+      color: var(--texto);
+      text-align: center;
+      opacity: .8;
+      max-width: 90%;
+    }
+
+    /* Sello redondo */
+    .sobre-sello {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(72px, 20vw);
+      height: min(72px, 20vw);
+      border-radius: 50%;
+      background: var(--crema);
+      border: 2px solid var(--beige);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      cursor: pointer;
+      transition: opacity 0.4s ease, transform 0.2s;
+      box-shadow: 0 2px 10px rgba(0,0,0,.18);
+    }
+    .sobre-sello:hover { transform: translate(-50%, -50%) scale(1.08); }
+    .sobre-sello.desvanecido { opacity: 0; pointer-events: none; }
+
+    .sello-texto {
+      font-family: var(--font-script);
+      font-size: clamp(16px, 4.5vw, 22px);
+      color: var(--terracota);
+    }
+
+    .portada-hint {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: clamp(12px, 3.5vw, 14px);
+      color: var(--texto);
+      opacity: .65;
+    }
+
+    /* ════════════════════════════════════════════════════
+       §2 INICIO CON FOTO
+    ════════════════════════════════════════════════════ */
+    #inicio {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      min-height: 480px;
+      max-height: 820px;
+      overflow: hidden;
+    }
+
+    .foto-pareja {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      /* Si usas variable CSS para background-image */
+      background: var(--foto-pareja) center/cover no-repeat;
+      background-color: #c8a98a; /* color de respaldo <!-- reemplazar --> */
+    }
+
+    .foto-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #c8a98a 0%, #a07050 50%, #7a3413 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,.4);
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 14px;
+      text-align: center;
+      /* ── Coloca aquí la foto: background: url('foto-pareja.jpg') center/cover; ── */
+    }
+
+    /* Curva inferior */
+    #inicio::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 60px;
+      background: var(--crema);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+
+    /* Fecha vertical izquierda */
+    .fecha-vertical {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      font-family: var(--font-title);
+      font-size: clamp(11px, 2.8vw, 13px);
+      color: #fff;
+      letter-spacing: .2em;
+      text-shadow: 0 1px 6px rgba(0,0,0,.7);
+      white-space: nowrap;
+    }
+
+    /* Overlay degradado en la parte baja */
+    .foto-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(74,36,16,.65) 0%, transparent 55%);
+    }
+
+    /* Nombres sobre la foto */
+    .nombres-foto {
+      position: absolute;
+      bottom: 70px;
+      left: 0; right: 0;
+      padding: 0 24px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .nombre-sergio {
+      font-family: var(--font-title);
+      font-size: clamp(36px, 11vw, 68px);
+      color: var(--terracota);
+      text-shadow: 0 2px 10px rgba(255,250,240,.7), 0 0 24px rgba(255,250,240,.5);
+      line-height: 1;
+    }
+    .nombre-gabriela {
+      font-family: var(--font-script);
+      font-size: clamp(38px, 11.5vw, 72px);
+      color: var(--terracota);
+      text-shadow: 0 2px 10px rgba(255,250,240,.7), 0 0 24px rgba(255,250,240,.5);
+      line-height: 1;
+      text-align: right;
+    }
+
+    /* ════════════════════════════════════════════════════
+       §3 CUENTA REGRESIVA Y FRASE
+    ════════════════════════════════════════════════════ */
+    #countdown-section {
+      padding: 60px 20px 50px;
+      text-align: center;
+      background: var(--crema);
+    }
+
+    .nos-casamos {
+      font-family: var(--font-title);
+      letter-spacing: .4em;
+      font-size: clamp(11px, 3.2vw, 13px);
+      color: var(--terracota);
+      margin-bottom: 28px;
+    }
+
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin: 0 auto 40px;
+      max-width: 400px;
+    }
+
+    .countdown-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 4px;
+      border-right: 1px solid var(--beige);
+    }
+    .countdown-item:last-child { border-right: none; }
+
+    .countdown-num {
+      font-family: var(--font-title);
+      font-size: clamp(32px, 9vw, 52px);
+      color: var(--terracota);
+      line-height: 1;
+    }
+    .countdown-label {
+      font-family: var(--font-body);
+      font-size: clamp(9px, 2.5vw, 11px);
+      letter-spacing: .15em;
+      color: var(--texto);
+      opacity: .65;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .cita-wrap {
+      max-width: 560px;
+      margin: 0 auto 32px;
+      padding: 0 16px;
+    }
+    .cita-comilla {
+      font-family: var(--font-body);
+      font-size: 80px;
+      color: var(--beige);
+      line-height: .5;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .cita-texto {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: clamp(14px, 3.8vw, 17px);
+      color: var(--texto);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .cita-texto2 {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 3.5vw, 15px);
+      color: var(--texto);
+      opacity: .8;
+      line-height: 1.6;
+    }
+
+    .btn-agenda {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 12px 28px;
+      border: 2px solid var(--terracota);
+      border-radius: 100px;
+      font-family: var(--font-title);
+      letter-spacing: .15em;
+      font-size: clamp(12px, 3.2vw, 13px);
+      color: var(--terracota);
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .btn-agenda:hover {
+      background: var(--terracota);
+      color: var(--crema);
+    }
+
+    /* ════════════════════════════════════════════════════
+       §4 PADRES (franja beige)
+    ════════════════════════════════════════════════════ */
+    #padres {
+      background: var(--beige-35);
+      padding: 56px 20px;
+      text-align: center;
+    }
+
+    .padres-supertitle {
+      font-family: var(--font-title);
+      letter-spacing: .3em;
+      font-size: clamp(10px, 2.8vw, 12px);
+      color: var(--terracota);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .padres-script-title {
+      font-family: var(--font-script);
+      font-size: clamp(32px, 8vw, 48px);
+      color: var(--terracota);
+      margin-bottom: 28px;
+    }
+
+    .padres-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .padres-bloque {
+      border-top: 1px solid var(--beige);
+      padding-top: 20px;
+    }
+
+    .padres-linea {
+      font-family: var(--font-body);
+      font-size: clamp(14px, 3.8vw, 16px);
+      color: var(--texto);
+      line-height: 1.6;
+    }
+    .padres-linea .dagger { font-style: normal; }
+
+    /* ════════════════════════════════════════════════════
+       §5 CEREMONIAS
+    ════════════════════════════════════════════════════ */
+    #ceremonias {
+      padding: 60px 16px;
+      background: var(--crema);
+    }
+
+    .ceremonias-titulo {
+      font-family: var(--font-title);
+      letter-spacing: .35em;
+      font-size: clamp(11px, 3vw, 13px);
+      color: var(--terracota);
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .ceremonias-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .ceremonia-card {
+      display: flex;
+      border: 1.5px solid var(--beige);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 140px;
+    }
+
+    .card-dia {
+      width: 72px;
+      min-width: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 8px;
+      gap: 2px;
+    }
+
+    .card-dia-num {
+      font-family: var(--font-title);
+      font-size: clamp(28px, 8vw, 42px);
+      line-height: 1;
+    }
+    .card-dia-mes {
+      font-family: var(--font-body);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      opacity: .75;
+    }
+
+    .card-info {
+      flex: 1;
+      padding: 16px 16px 16px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    /* Variante crema (sábado) */
+    .card-sabado .card-dia { background: var(--crema-lt); color: var(--terracota); border-right: 1px solid var(--beige); }
+    .card-sabado .card-info { background: #fff9f1; }
+
+    /* Variante terracota (domingo) */
+    .card-domingo { border-color: var(--terracota); }
+    .card-domingo .card-dia { background: var(--terracota); color: var(--crema); }
+    .card-domingo .card-dia-mes { color: var(--crema); }
+    .card-domingo .card-info { background: var(--terracota); color: var(--crema); }
+    .card-domingo .card-titulo { color: var(--crema); }
+    .card-domingo .card-hora  { color: var(--beige); }
+    .card-domingo .card-lugar { color: rgba(248,242,232,.85); }
+    .card-domingo .card-dir   { color: rgba(248,242,232,.65); }
+    .card-domingo .card-link  { color: var(--beige); }
+
+    .card-icono { margin-bottom: 2px; }
+
+    .card-titulo {
+      font-family: var(--font-title);
+      letter-spacing: .15em;
+      font-size: clamp(11px, 3vw, 13px);
+      color: var(--terracota);
+      text-transform: uppercase;
+    }
+
+    .card-hora {
+      font-family: var(--font-title);
+      font-size: clamp(18px, 5vw, 24px);
+      color: var(--texto);
+      line-height: 1;
+    }
+
+    .card-lugar {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: clamp(13px, 3.5vw, 15px);
+      color: var(--texto);
+    }
+
+    .card-dir {
+      font-family: var(--font-body);
+      font-size: clamp(11px, 3vw, 12px);
+      color: var(--texto);
+      opacity: .65;
+      line-height: 1.4;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+      font-family: var(--font-body);
+      font-size: clamp(11px, 3vw, 13px);
+      color: var(--terracota);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+    }
+
+    .nota-recepcion {
+      max-width: 500px;
+      margin: 24px auto 0;
+      text-align: center;
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: clamp(13px, 3.5vw, 15px);
+      color: var(--texto);
+      opacity: .8;
+      line-height: 1.6;
+      border-top: 1px solid var(--beige);
+      padding-top: 20px;
+    }
+
+    /* ════════════════════════════════════════════════════
+       §6 ITINERARIO (franja terracota)
+    ════════════════════════════════════════════════════ */
+    #itinerario {
+      background: radial-gradient(ellipse at 60% 40%, var(--terracota-lt) 0%, var(--terracota) 50%, var(--terracota-dark) 100%);
+      padding: 60px 24px;
+      color: var(--crema);
+    }
+
+    .itinerario-titulo {
+      font-family: var(--font-title);
+      letter-spacing: .4em;
+      font-size: clamp(13px, 3.5vw, 15px);
+      text-align: center;
+      color: var(--crema);
+      opacity: .8;
+      margin-bottom: 36px;
+    }
+
+    .itinerario-dia {
+      font-family: var(--font-script);
+      font-size: clamp(28px, 7vw, 42px);
+      color: var(--crema);
+      text-align: center;
+      margin: 28px 0 16px;
+    }
+
+    .itinerario-lista {
+      max-width: 500px;
+      margin: 0 auto;
+      list-style: none;
+    }
+
+    .itinerario-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(209,182,157,.2);
+    }
+    .itinerario-item:last-child { border-bottom: none; }
+
+    .item-icono {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .item-icono svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--beige);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .item-nombre {
+      font-family: var(--font-body);
+      font-size: clamp(14px, 3.8vw, 16px);
+      color: var(--crema);
+      flex: 1;
+    }
+
+    .item-puntos {
+      flex: 1;
+      border-bottom: 1.5px dotted rgba(209,182,157,.4);
+      margin: 0 8px;
+      min-width: 20px;
+    }
+
+    .item-hora {
+      font-family: var(--font-title);
+      font-size: clamp(14px, 3.8vw, 16px);
+      color: var(--beige);
+      white-space: nowrap;
+    }
+
+    /* ════════════════════════════════════════════════════
+       §7 CANCIÓN (franja beige)
+    ════════════════════════════════════════════════════ */
+    #cancion {
+      background: var(--beige-35);
+      padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .cancion-titulo {
+      font-family: var(--font-title);
+      letter-spacing: .35em;
+      font-size: clamp(11px, 3vw, 13px);
+      color: var(--terracota);
+    }
+
+    .vinilo-wrap {
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .vinilo {
+      width: min(160px, 44vw);
+      height: min(160px, 44vw);
+      border-radius: 50%;
+      position: relative;
+      animation: girar 8s linear infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vinilo { animation: none; }
+    }
+
+    @keyframes girar {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .vinilo svg { width: 100%; height: 100%; }
+
+    .cancion-info {
+      text-align: center;
+    }
+    .cancion-nombre {
+      font-family: var(--font-script);
+      font-size: clamp(22px, 6vw, 32px);
+      color: var(--terracota);
+      display: block;
+    }
+    .cancion-artista {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: clamp(13px, 3.5vw, 15px);
+      color: var(--texto);
+      opacity: .75;
+    }
+
+    /* ════════════════════════════════════════════════════
+       §8 CONFIRMACIÓN
+    ════════════════════════════════════════════════════ */
+    #confirmacion {
+      padding: 60px 20px 50px;
+      background: var(--crema);
+      text-align: center;
+    }
+
+    .confirm-titulo {
+      font-family: var(--font-title);
+      letter-spacing: .3em;
+      font-size: clamp(12px, 3.2vw, 14px);
+      color: var(--terracota);
+      margin-bottom: 8px;
+    }
+
+    .confirm-script {
+      font-family: var(--font-script);
+      font-size: clamp(32px, 8vw, 48px);
+      color: var(--terracota);
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .confirm-texto {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: clamp(14px, 3.8vw, 16px);
+      color: var(--texto);
+      max-width: 440px;
+      margin: 0 auto 32px;
+      line-height: 1.65;
+      opacity: .85;
+    }
+
+    /* Formulario */
+    .form-wrap {
+      max-width: 440px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .form-field {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: clamp(11px, 3vw, 12px);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--texto);
+      opacity: .7;
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid var(--beige);
+      padding: 8px 0;
+      font-family: var(--font-body);
+      font-size: clamp(14px, 3.8vw, 16px);
+      color: var(--texto);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-input:focus { border-bottom-color: var(--terracota); }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    /* Radio personalizado */
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-size: clamp(14px, 3.8vw, 16px);
+      color: var(--texto);
+      cursor: pointer;
+    }
+
+    .radio-label input[type="radio"] { display: none; }
+
+    .radio-custom {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--beige);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .2s;
+      flex-shrink: 0;
+    }
+    .radio-label input:checked + .radio-custom {
+      border-color: var(--terracota);
+    }
+    .radio-label input:checked + .radio-custom::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--terracota);
+    }
+
+    /* Contador de invitados */
+    .counter-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .counter-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid var(--beige);
+      background: transparent;
+      color: var(--terracota);
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+    .counter-btn:hover { background: var(--beige-35); }
+    .counter-num {
+      font-family: var(--font-title);
+      font-size: 22px;
+      color: var(--texto);
+      min-width: 28px;
+      text-align: center;
+    }
+
+    /* Botón enviar */
+    .btn-enviar {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: var(--terracota);
+      color: var(--crema);
+      border: none;
+      border-radius: 100px;
+      font-family: var(--font-title);
+      letter-spacing: .2em;
+      font-size: clamp(13px, 3.5vw, 15px);
+      cursor: pointer;
+      transition: background .2s;
+      margin-top: 32px;
+    }
+    .btn-enviar:hover { background: var(--terracota-dark); }
+
+    .confirm-contacto {
+      margin-top: 24px;
+      font-family: var(--font-body);
+      font-size: clamp(12px, 3.2vw, 14px);
+      color: var(--texto);
+      opacity: .7;
+      line-height: 1.8;
+      text-align: center;
+    }
+    .confirm-contacto a {
+      color: var(--terracota);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ════════════════════════════════════════════════════
+       §9 PIE DE PÁGINA
+    ════════════════════════════════════════════════════ */
+    footer {
+      position: relative;
+      background: var(--crema);
+      padding: 60px 20px 80px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Flores decorativas en las esquinas */
+    .flores-sup-izq,
+    .flores-inf-der {
+      position: absolute;
+      width: min(180px, 42vw);
+      height: min(180px, 42vw);
+      pointer-events: none;
+      /* <!-- reemplazar --> pon aquí tu imagen de flores en acuarela */
+    }
+    .flores-sup-izq {
+      top: 0; left: 0;
+      /* background: url('flores.png') top left / contain no-repeat; */
+    }
+    .flores-inf-der {
+      bottom: 0; right: 0;
+      transform: rotate(180deg);
+      /* background: url('flores.png') top left / contain no-repeat; */
+    }
+
+    /* SVG de flores de placeholder (en caso de no tener imagen) */
+    .flores-sup-izq svg,
+    .flores-inf-der svg {
+      width: 100%;
+      height: 100%;
+      opacity: .55;
+    }
+
+    .footer-amor {
+      font-family: var(--font-title);
+      letter-spacing: .5em;
+      font-size: clamp(10px, 2.8vw, 12px);
+      color: var(--terracota);
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .footer-nombres {
+      font-family: var(--font-script);
+      font-size: clamp(38px, 10vw, 60px);
+      color: var(--terracota);
+      display: block;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .footer-fecha {
+      font-family: var(--font-title);
+      letter-spacing: .3em;
+      font-size: clamp(14px, 4vw, 20px);
+      color: var(--texto);
+      opacity: .65;
+      position: relative;
+    }
+
+    /* ════════════════════════════════════════════════════
+       BANNER DE INVITADO (si viene por URL)
+    ════════════════════════════════════════════════════ */
+    #banner-invitado {
+      display: none;
+      background: var(--terracota);
+      color: var(--crema);
+      text-align: center;
+      padding: 10px 20px;
+      font-family: var(--font-body);
+      font-size: clamp(13px, 3.5vw, 15px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding-top: max(10px, env(safe-area-inset-top, 10px));
+    }
+    #banner-invitado.visible { display: block; }
+    #banner-invitado strong { font-family: var(--font-title); letter-spacing: .05em; }
+
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════
+     BOTÓN FLOTANTE — CANCIÓN (arriba derecha)
+════════════════════════════════════════════ -->
+<!--
+  WHATSAPP: cambia 59179715222 por el número real si es necesario
+  YouTube: https://youtu.be/7XPmRUp_Yf4
+-->
+<a id="btn-musica"
+   href="https://youtu.be/7XPmRUp_Yf4"
+   target="_blank"
+   rel="noopener"
+   aria-label="Nuestra canción">♪</a>
+
+<!-- ═══════════════════════════════════════════
+     BANNER DE INVITADO (leído desde la URL)
+════════════════════════════════════════════ -->
+<div id="banner-invitado" role="banner" aria-live="polite"></div>
+
+<!-- ═══════════════════════════════════════════
+     §1 PORTADA CON SOBRE
+════════════════════════════════════════════ -->
+<div id="portada" role="dialog" aria-modal="true" aria-label="Portada de la invitación">
+  <p id="portada-label" class="text-title" style="letter-spacing:.35em; font-size:clamp(12px,3.5vw,15px); color:var(--terracota);">NUESTRA BODA</p>
+
+  <div class="sobre-wrap" role="presentation">
+    <!-- Cuerpo del sobre -->
+    <div class="sobre-cuerpo">
+      <div class="sobre-solapa" id="sobre-solapa"></div>
+      <div class="sobre-base"></div>
+
+      <!-- Carta dentro del sobre -->
+      <div class="sobre-carta" id="sobre-carta">
+        <div class="carta-nombres">Sergio &amp; Gabriela</div>
+        <div class="carta-para" id="carta-para-texto">Invitación de boda</div>
+      </div>
+
+      <!-- Sello clickable -->
+      <button class="sobre-sello" id="sobre-sello" aria-label="Toca el sello para abrir la invitación">
+        <span class="sello-texto">S&amp;G</span>
+      </button>
+    </div>
+  </div>
+
+  <p class="portada-hint">Toca el sello para abrir</p>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     §2 INICIO CON FOTO
+════════════════════════════════════════════ -->
+<section id="inicio" aria-label="Portada de la invitación">
+  <!--
+    FOTO DE LA PAREJA
+    Opción A (recomendada): reemplaza el div por:
+      <img src="foto-pareja.jpg" class="foto-placeholder" alt="Sergio y Gabriela" />
+    Opción B: en :root arriba, cambia  --foto-pareja: url('foto-pareja.jpg')
+  -->
+  <div class="foto-placeholder" role="img" aria-label="Foto de Sergio y Gabriela">
+    <!-- reemplazar con foto de la pareja -->
+    <span style="font-style:italic; opacity:.5;">foto de la pareja</span>
+  </div>
+
+  <div class="foto-overlay" aria-hidden="true"></div>
+  <div class="fecha-vertical" aria-hidden="true">09 · 01 · 2027</div>
+
+  <div class="nombres-foto" aria-hidden="true">
+    <span class="nombre-sergio">Sergio</span>
+    <span class="nombre-gabriela">&amp; Gabriela</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     §3 CUENTA REGRESIVA Y FRASE
+════════════════════════════════════════════ -->
+<section id="countdown-section" aria-label="Cuenta regresiva">
+  <p class="nos-casamos reveal">¡NOS CASAMOS!</p>
+
+  <div class="countdown-grid reveal" role="timer" aria-live="polite" aria-label="Tiempo para la boda">
+    <div class="countdown-item">
+      <span class="countdown-num" id="cd-dias">--</span>
+      <span class="countdown-label">días</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-num" id="cd-horas">--</span>
+      <span class="countdown-label">horas</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-num" id="cd-min">--</span>
+      <span class="countdown-label">minutos</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-num" id="cd-seg">--</span>
+      <span class="countdown-label">segundos</span>
+    </div>
+  </div>
+
+  <div class="cita-wrap reveal">
+    <span class="cita-comilla" aria-hidden="true">"</span>
+    <p class="cita-texto">
+      De un encuentro inesperado nació un amor que no imaginábamos, una certeza que creció con cada paso y el deseo profundo de elegirnos para compartir la vida.
+    </p>
+    <p class="cita-texto2">
+      Tenemos la alegría de invitarte a celebrar el comienzo de nuestra vida matrimonial.
+    </p>
+  </div>
+
+  <!--
+    GOOGLE CALENDAR
+    Fecha: 20270109T143000
+    Zona horaria Bolivia: UTC-4 (no tiene DST)
+    Ajusta si cambian los datos
+  -->
+  <a class="btn-agenda reveal"
+     href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Sergio+%26+Gabriela&dates=20270109T183000Z%2F20270109T213000Z&details=Ceremonia+religiosa+%7C+Templo+de+La+Recoleta%2C+Cochabamba&location=Templo+de+La+Recoleta%2C+Cochabamba%2C+Bolivia&ctz=America%2FLa_Paz"
+     target="_blank"
+     rel="noopener">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+    Agendar evento
+  </a>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     §4 PADRES
+════════════════════════════════════════════ -->
+<section id="padres" aria-label="Nuestros padres">
+  <p class="padres-supertitle reveal">CON LA BENDICIÓN DE DIOS<br>Y DE NUESTRAS FAMILIAS</p>
+  <p class="padres-script-title reveal">Nuestros padres</p>
+
+  <div class="padres-grid reveal">
+    <div class="padres-bloque">
+      <p class="padres-linea">Marcial Luis Guzman</p>
+      <p class="padres-linea">y Nelly Cortez Mamani</p>
+    </div>
+    <div class="padres-bloque">
+      <p class="padres-linea">German Gonzales Zapata <span class="dagger">†</span></p>
+      <p class="padres-linea">y Adela Alcocer Vargas</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     §5 CEREMONIAS
+════════════════════════════════════════════ -->
+<section id="ceremonias" aria-label="Ceremonias">
+  <p class="ceremonias-titulo reveal">CEREMONIAS</p>
+
+  <div class="ceremonias-grid">
+
+    <!-- Sábado — Ceremonia religiosa -->
+    <div class="ceremonia-card card-sabado reveal">
+      <div class="card-dia">
+        <span class="card-dia-num">09</span>
+        <span class="card-dia-mes">ENE 2027</span>
+      </div>
+      <div class="card-info">
+        <div class="card-icono" aria-hidden="true">
+          <!-- Ícono iglesia con cruz (SVG líneas finas) -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A2481B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4M10 4h4"/>
+            <path d="M5 10h14l1 12H4L5 10z"/>
+            <path d="M9 22v-6h6v6"/>
+            <path d="M12 10V6"/>
+          </svg>
+        </div>
+        <span class="card-titulo">Ceremonia Religiosa</span>
+        <span class="card-hora">14:30 h · Sábado 09</span>
+        <span class="card-lugar">Templo de La Recoleta</span>
+        <span class="card-dir">Plaza Ubaldo Anze, Cochabamba, Bolivia</span>
+        <a class="card-link"
+           href="https://www.google.com/maps/search/?api=1&query=Templo+de+La+Recoleta+Cochabamba"
+           target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Ver ubicación
+        </a>
+      </div>
+    </div>
+
+    <!-- Domingo — Ceremonia civil -->
+    <div class="ceremonia-card card-domingo reveal">
+      <div class="card-dia">
+        <span class="card-dia-num">10</span>
+        <span class="card-dia-mes">ENE 2027</span>
+      </div>
+      <div class="card-info">
+        <div class="card-icono" aria-hidden="true">
+          <!-- Ícono anillos (SVG líneas finas) -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(248,242,232,.8)" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="8" cy="12" r="5"/>
+            <circle cx="16" cy="12" r="5"/>
+          </svg>
+        </div>
+        <span class="card-titulo" style="color:rgba(248,242,232,.75);">Ceremonia Civil</span>
+        <span class="card-hora">15:00 h · Domingo 10</span>
+        <span class="card-lugar">Salón de Eventos LUMAR</span>
+        <span class="card-dir">Av. Juana Azurduy de Padilla N.° 776,<br>entre Ladislao Cabrera y Nanawa, Cochabamba</span>
+        <a class="card-link"
+           href="https://www.google.com/maps/search/?api=1&query=Salon+de+Eventos+LUMAR+Av+Juana+Azurduy+de+Padilla+776+Cochabamba"
+           target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Ver ubicación
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="nota-recepcion reveal">
+    Al finalizar la ceremonia religiosa, te esperamos en la recepción social a las 16:30 en el Salón de Eventos LUMAR.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     §6 ITINERARIO
+════════════════════════════════════════════ -->
+<section id="itinerario" aria-label="Itinerario">
+  <p class="itinerario-titulo reveal">ITINERARIO</p>
+
+  <!-- Sábado -->
+  <p class="itinerario-dia reveal">Sábado 09 de enero</p>
+  <ul class="itinerario-lista reveal" aria-label="Programa del sábado">
+
+    <li class="itinerario-item">
+      <span class="item-icono" aria-hidden="true">
+        <!-- Iglesia con cruz -->
+        <svg viewBox="0 0 24 24"><path d="M12 2v4M10 4h4"/><path d="M5 10h14l1 11H4L5 10z"/><path d="M9 21v-5h6v5"/></svg>
+      </span>
+      <span class="item-nombre">Ceremonia religiosa</span>
+      <span class="item-puntos" aria-hidden="true"></span>
+      <span class="item-hora">14:30</span>
+    </li>
+
+    <li class="itinerario-item">
+      <span class="item-icono" aria-hidden="true">
+        <!-- Copa y persona -->
+        <svg viewBox="0 0 24 24"><path d="M8 2l2 8h4l2-8M6 10c0 4 2 6 6 6s6-2 6-6"/><line x1="12" y1="16" x2="12" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/></svg>
+      </span>
+      <span class="item-nombre">Recepción social</span>
+      <span class="item-puntos" aria-hidden="true"></span>
+      <span class="item-hora">16:30</span>
+    </li>
+
+    <li class="itinerario-item">
+      <span class="item-icono" aria-hidden="true">
+        <!-- Pareja bailando -->
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="4" r="1.5"/><circle cx="15" cy="4" r="1.5"/><path d="M6 8c1 1 2 2 3 4l-2 4"/><path d="M18 8c-1 1-2 2-3 4l2 4"/><path d="M9 12c1 2 3 2 6 0"/></svg>
+      </span>
+      <span class="item-nombre">Vals de los novios</span>
+      <span class="item-puntos" aria-hidden="true"></span>
+      <span class="item-hora">17:00</span>
+    </li>
+
+    <li class="itinerario-item">
+      <span class="item-icono" aria-hidden="true">
+        <!-- Cubiertos -->
+        <svg viewBox="0 0 24 24"><path d="M3 3v18M3 8c3 0 5-2 5-5"/><path d="M21 3v7a3 3 0 01-3 3v7"/></svg>
+      </span>
+      <span class="item-nombre">Cena</span>
+      <span class="item-puntos" aria-hidden="true"></span>
+      <span class="item-hora">18:30</span>
+    </li>
+
+    <li class="itinerario-item">
+      <span class="item-icono" aria-hidden="true">
+        <!-- Notas musicales -->
+        <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      </span>
+      <span class="item-nombre">¡Todos a bailar!</span>
+      <span class="item-puntos" aria-hidden="true"></span>
+      <span class="item-hora">20:00</span>
+    </li>
+
+    <li class="itinerario-item">
+      <span class="item-icono" aria-hidden="true">
+        <!-- Luna y estrellas -->
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/><path d="M18 2l.5 1.5L20 4l-1.5.5L18 6l-.5-1.5L16 4l1.5-.5z"/></svg>
+      </span>
+      <span class="item-nombre">Despedida</span>
+      <span class="item-puntos" aria-hidden="true"></span>
+      <span class="item-hora">1:30</span>
+    </li>
+
+  </ul>
+
+  <!-- Domingo -->
+  <p class="itinerario-dia reveal" style="margin-top:40px;">Domingo 10 de enero</p>
+  <ul class="itinerario-lista reveal" aria-label="Programa del domingo">
+
+    <li class="itinerario-item">
+      <span class="item-icono" aria-hidden="true">
+        <!-- Dos anillos entrelazados -->
+        <svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+      </span>
+      <span class="item-nombre">Ceremonia civil</span>
+      <span class="item-puntos" aria-hidden="true"></span>
+      <span class="item-hora">15:00</span>
+    </li>
+
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     §7 CANCIÓN
+════════════════════════════════════════════ -->
+<section id="cancion" aria-label="Nuestra canción">
+  <p class="cancion-titulo reveal">NUESTRA CANCIÓN</p>
+
+  <a class="vinilo-wrap reveal"
+     href="https://youtu.be/7XPmRUp_Yf4"
+     target="_blank"
+     rel="noopener"
+     aria-label="Escuchar La Promesa de Melendi">
+    <!-- Disco de vinilo SVG -->
+    <div class="vinilo">
+      <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="80" cy="80" r="78" fill="#3a1a0a" stroke="#A2481B" stroke-width="2"/>
+        <circle cx="80" cy="80" r="66" fill="none" stroke="#A2481B" stroke-width="1" opacity=".5"/>
+        <circle cx="80" cy="80" r="54" fill="none" stroke="#A2481B" stroke-width="1" opacity=".4"/>
+        <circle cx="80" cy="80" r="42" fill="none" stroke="#A2481B" stroke-width="1" opacity=".35"/>
+        <circle cx="80" cy="80" r="30" fill="none" stroke="#A2481B" stroke-width="1" opacity=".3"/>
+        <circle cx="80" cy="80" r="22" fill="#A2481B" stroke="#D1B69D" stroke-width="1.5"/>
+        <circle cx="80" cy="80" r="14" fill="#D1B69D" opacity=".5"/>
+        <text x="80" y="85" text-anchor="middle" font-family="serif" font-size="16" fill="#3a1a0a">♪</text>
+        <circle cx="80" cy="80" r="4" fill="#3a1a0a"/>
+      </svg>
+    </div>
+    <div class="cancion-info">
+      <span class="cancion-nombre">La promesa</span>
+      <span class="cancion-artista">Melendi</span>
+    </div>
+  </a>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     §8 CONFIRMACIÓN
+════════════════════════════════════════════ -->
+<section id="confirmacion" aria-label="Confirmación de asistencia">
+  <p class="confirm-titulo reveal">CONFIRMA TU ASISTENCIA</p>
+  <span class="confirm-script reveal">Te esperamos</span>
+  <p class="confirm-texto reveal">
+    Será una alegría contar con tu presencia y compartir juntos este capítulo tan especial de nuestras vidas.
+  </p>
+
+  <form class="form-wrap reveal" id="form-rsvp" novalidate>
+
+    <!-- Campo Nombre -->
+    <div class="form-field">
+      <label class="form-label" for="f-nombre">Tu nombre</label>
+      <input class="form-input" type="text" id="f-nombre" name="nombre"
+             placeholder="Escribe tu nombre completo" autocomplete="name" required />
+    </div>
+
+    <!-- ¿Asistirás? -->
+    <div class="form-field">
+      <span class="form-label">¿Asistirás?</span>
+      <div class="radio-group" role="radiogroup" aria-label="¿Asistirás?">
+        <label class="radio-label">
+          <input type="radio" name="asistencia" value="Sí, ahí estaré" checked />
+          <span class="radio-custom"></span>
+          Sí, ahí estaré 🎉
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="asistencia" value="No podré, lo siento" />
+          <span class="radio-custom"></span>
+          No podré, lo siento 😔
+        </label>
+      </div>
+    </div>
+
+    <!-- Cantidad de invitados -->
+    <div class="form-field" id="campo-invitados">
+      <span class="form-label">¿Cuántas personas asistirán?</span>
+      <div class="counter-row">
+        <button type="button" class="counter-btn" id="btn-menos" aria-label="Restar una persona">−</button>
+        <span class="counter-num" id="num-invitados" aria-live="polite">1</span>
+        <button type="button" class="counter-btn" id="btn-mas" aria-label="Agregar una persona">+</button>
+      </div>
+    </div>
+
+    <!-- Mensaje -->
+    <div class="form-field">
+      <label class="form-label" for="f-mensaje">Un mensaje para los novios (opcional)</label>
+      <textarea class="form-input form-textarea" id="f-mensaje" name="mensaje"
+                placeholder="Escribe aquí tu mensaje…" rows="3"></textarea>
+    </div>
+
+    <!--
+      WHATSAPP: número 59179715222
+      Para cambiar el número, busca '59179715222' en este archivo
+    -->
+    <button type="submit" class="btn-enviar">
+      Enviar por WhatsApp 💬
+    </button>
+
+  </form>
+
+  <p class="confirm-contacto reveal">
+    También puedes confirmar al <strong>79715222</strong><br>
+    o escribir a <a href="mailto:marize.ale.gm@gmail.com">marize.ale.gm@gmail.com</a>
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     §9 PIE DE PÁGINA
+════════════════════════════════════════════ -->
+<footer aria-label="Pie de página">
+  <!-- Flores esquina superior izquierda -->
+  <!-- reemplazar: quita el SVG y pon  style="background:url('flores.png') top left/contain no-repeat" -->
+  <div class="flores-sup-izq" aria-hidden="true">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Rosas y hojas decorativas en estilo minimalista terracota/crema -->
+      <g opacity=".7">
+        <!-- Tallos -->
+        <path d="M20 180 Q40 120 60 90" stroke="#A2481B" stroke-width="1.5" fill="none"/>
+        <path d="M20 180 Q70 150 100 110" stroke="#A2481B" stroke-width="1.2" fill="none"/>
+        <path d="M20 180 Q30 140 50 130" stroke="#7a3413" stroke-width="1" fill="none"/>
+        <!-- Hojas terracota -->
+        <ellipse cx="58" cy="92" rx="10" ry="5" fill="#A2481B" transform="rotate(-40 58 92)" opacity=".6"/>
+        <ellipse cx="98" cy="112" rx="12" ry="5" fill="#7a3413" transform="rotate(-20 98 112)" opacity=".5"/>
+        <ellipse cx="45" cy="135" rx="8" ry="4" fill="#c05a24" transform="rotate(-55 45 135)" opacity=".5"/>
+        <ellipse cx="75" cy="145" rx="9" ry="4" fill="#A2481B" transform="rotate(-30 75 145)" opacity=".45"/>
+        <!-- Rosas (pétalos en crema/beige) -->
+        <circle cx="62" cy="82" r="10" fill="#D1B69D" opacity=".5"/>
+        <circle cx="58" cy="80" r="7" fill="#F8F2E8" opacity=".6"/>
+        <circle cx="66" cy="82" r="6" fill="#D1B69D" opacity=".45"/>
+        <circle cx="62" cy="88" r="5" fill="#F8F2E8" opacity=".5"/>
+        <!-- Segunda flor -->
+        <circle cx="104" cy="100" r="11" fill="#D1B69D" opacity=".45"/>
+        <circle cx="100" cy="98" r="8" fill="#F8F2E8" opacity=".55"/>
+        <circle cx="108" cy="102" r="6" fill="#D1B69D" opacity=".4"/>
+        <!-- Ramitas pequeñas -->
+        <path d="M40 155 Q48 148 54 142" stroke="#A2481B" stroke-width="1" fill="none" opacity=".5"/>
+        <path d="M70 130 Q80 120 90 115" stroke="#7a3413" stroke-width="1" fill="none" opacity=".4"/>
+        <circle cx="55" cy="141" r="3" fill="#D1B69D" opacity=".5"/>
+        <circle cx="90" cy="114" r="4" fill="#D1B69D" opacity=".45"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Flores esquina inferior derecha (giradas 180°) -->
+  <div class="flores-inf-der" aria-hidden="true">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <g opacity=".7">
+        <path d="M20 180 Q40 120 60 90" stroke="#A2481B" stroke-width="1.5" fill="none"/>
+        <path d="M20 180 Q70 150 100 110" stroke="#A2481B" stroke-width="1.2" fill="none"/>
+        <path d="M20 180 Q30 140 50 130" stroke="#7a3413" stroke-width="1" fill="none"/>
+        <ellipse cx="58" cy="92" rx="10" ry="5" fill="#A2481B" transform="rotate(-40 58 92)" opacity=".6"/>
+        <ellipse cx="98" cy="112" rx="12" ry="5" fill="#7a3413" transform="rotate(-20 98 112)" opacity=".5"/>
+        <ellipse cx="45" cy="135" rx="8" ry="4" fill="#c05a24" transform="rotate(-55 45 135)" opacity=".5"/>
+        <ellipse cx="75" cy="145" rx="9" ry="4" fill="#A2481B" transform="rotate(-30 75 145)" opacity=".45"/>
+        <circle cx="62" cy="82" r="10" fill="#D1B69D" opacity=".5"/>
+        <circle cx="58" cy="80" r="7" fill="#F8F2E8" opacity=".6"/>
+        <circle cx="66" cy="82" r="6" fill="#D1B69D" opacity=".45"/>
+        <circle cx="62" cy="88" r="5" fill="#F8F2E8" opacity=".5"/>
+        <circle cx="104" cy="100" r="11" fill="#D1B69D" opacity=".45"/>
+        <circle cx="100" cy="98" r="8" fill="#F8F2E8" opacity=".55"/>
+        <circle cx="108" cy="102" r="6" fill="#D1B69D" opacity=".4"/>
+        <path d="M40 155 Q48 148 54 142" stroke="#A2481B" stroke-width="1" fill="none" opacity=".5"/>
+        <path d="M70 130 Q80 120 90 115" stroke="#7a3413" stroke-width="1" fill="none" opacity=".4"/>
+        <circle cx="55" cy="141" r="3" fill="#D1B69D" opacity=".5"/>
+        <circle cx="90" cy="114" r="4" fill="#D1B69D" opacity=".45"/>
+      </g>
+    </svg>
+  </div>
+
+  <p class="footer-amor reveal">CON AMOR</p>
+  <span class="footer-nombres reveal">Sergio &amp; Gabriela</span>
+  <p class="footer-fecha reveal">09 · 01 · 2027</p>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+<script>
+  'use strict';
+
+  /* ─────────────────────────────────────────
+     LECTURA DE PARÁMETROS DE URL
+     Uso: invitacion.html?nombre=Ana+Lopez&invitados=3
+  ───────────────────────────────────────── */
+  (function leerURL() {
+    const params  = new URLSearchParams(window.location.search);
+    const nombre   = params.get('nombre')    || '';
+    const invitados = parseInt(params.get('invitados') || '1', 10);
+    const n = isNaN(invitados) || invitados < 1 ? 1 : invitados;
+    const personas = n === 1 ? '1 persona' : n + ' personas';
+
+    if (nombre) {
+      /* Banner superior */
+      const banner = document.getElementById('banner-invitado');
+      banner.innerHTML = 'Invitación para <strong>' + nombre + '</strong> · ' + personas;
+      banner.classList.add('visible');
+
+      /* Carta del sobre */
+      const cartaPara = document.getElementById('carta-para-texto');
+      if (cartaPara) cartaPara.textContent = 'Invitación para ' + nombre;
+
+      /* Prellenar campo del formulario */
+      const campoNombre = document.getElementById('f-nombre');
+      if (campoNombre) campoNombre.value = nombre;
+
+      /* Prellenar contador de invitados */
+      document.getElementById('num-invitados').textContent = n;
+      contadorInvitados = n;
+    }
+  })();
+
+  /* ─────────────────────────────────────────
+     PORTADA CON SOBRE — INTERACCIÓN
+  ───────────────────────────────────────── */
+  const sello  = document.getElementById('sobre-sello');
+  const solapa = document.getElementById('sobre-solapa');
+  const carta  = document.getElementById('sobre-carta');
+  const portada = document.getElementById('portada');
+
+  sello.addEventListener('click', abrirSobre);
+  sello.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirSobre(); }
+  });
+
+  function abrirSobre() {
+    /* 1. Abrir la solapa */
+    solapa.classList.add('abierta');
+    /* 2. Elevar la carta */
+    setTimeout(() => carta.classList.add('elevada'), 300);
+    /* 3. Desvanecer el sello */
+    sello.classList.add('desvanecido');
+    /* 4. Desvanecer toda la portada */
+    setTimeout(() => {
+      portada.classList.add('oculta');
+      /* Restaurar scroll después de cerrar la portada */
+      setTimeout(() => {
+        portada.style.display = 'none';
+        document.body.style.overflow = '';
+        /* Disparar animaciones de la primera sección */
+        checkReveal();
+      }, 800);
+    }, 2500);
+  }
+
+  /* Bloquear scroll mientras la portada está abierta */
+  document.body.style.overflow = 'hidden';
+
+  /* ─────────────────────────────────────────
+     CUENTA REGRESIVA
+     Fecha objetivo: 9 enero 2027, 14:30 hora Bolivia (UTC-4)
+     Cambia la constante BODA_UTC si cambias la fecha/hora
+  ───────────────────────────────────────── */
+  /* 2027-01-09T14:30:00-04:00 en milisegundos UTC */
+  const BODA_UTC = Date.UTC(2027, 0, 9, 18, 30, 0); /* UTC = -4 → sumar 4h */
+
+  function actualizarCountdown() {
+    const ahora = Date.now();
+    const diff  = BODA_UTC - ahora;
+
+    if (diff <= 0) {
+      document.getElementById('cd-dias').textContent  = '0';
+      document.getElementById('cd-horas').textContent = '0';
+      document.getElementById('cd-min').textContent   = '0';
+      document.getElementById('cd-seg').textContent   = '0';
+      return;
+    }
+
+    const dias  = Math.floor(diff / 86400000);
+    const horas = Math.floor((diff % 86400000) / 3600000);
+    const min   = Math.floor((diff % 3600000)  / 60000);
+    const seg   = Math.floor((diff % 60000)    / 1000);
+
+    document.getElementById('cd-dias').textContent  = dias;
+    document.getElementById('cd-horas').textContent = String(horas).padStart(2,'0');
+    document.getElementById('cd-min').textContent   = String(min).padStart(2,'0');
+    document.getElementById('cd-seg').textContent   = String(seg).padStart(2,'0');
+  }
+
+  actualizarCountdown();
+  setInterval(actualizarCountdown, 1000);
+
+  /* ─────────────────────────────────────────
+     CONTADOR DE INVITADOS EN EL FORMULARIO
+  ───────────────────────────────────────── */
+  let contadorInvitados = 1;
+
+  document.getElementById('btn-menos').addEventListener('click', function() {
+    if (contadorInvitados > 1) {
+      contadorInvitados--;
+      document.getElementById('num-invitados').textContent = contadorInvitados;
+    }
+  });
+  document.getElementById('btn-mas').addEventListener('click', function() {
+    if (contadorInvitados < 20) {
+      contadorInvitados++;
+      document.getElementById('num-invitados').textContent = contadorInvitados;
+    }
+  });
+
+  /* Ocultar campo de invitados si no asiste */
+  document.querySelectorAll('input[name="asistencia"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      const campoInv = document.getElementById('campo-invitados');
+      campoInv.style.display = this.value === 'Sí, ahí estaré' ? '' : 'none';
+    });
+  });
+
+  /* ─────────────────────────────────────────
+     FORMULARIO — ENVÍO POR WHATSAPP
+     WHATSAPP: cambia 59179715222 por el número real si es necesario
+  ───────────────────────────────────────── */
+  document.getElementById('form-rsvp').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const nombre     = document.getElementById('f-nombre').value.trim() || 'Invitado';
+    const asistencia = document.querySelector('input[name="asistencia"]:checked').value;
+    const invitados  = asistencia === 'Sí, ahí estaré' ? contadorInvitados : 0;
+    const mensaje    = document.getElementById('f-mensaje').value.trim();
+
+    let texto = '¡Hola! Soy *' + nombre + '* y quiero confirmar mi asistencia a la boda de Sergio y Gabriela.\n\n';
+    texto += '✅ *Asistencia:* ' + asistencia + '\n';
+    if (asistencia === 'Sí, ahí estaré') {
+      texto += '👥 *Personas:* ' + invitados + (invitados === 1 ? ' persona' : ' personas') + '\n';
+    }
+    if (mensaje) {
+      texto += '💬 *Mensaje:* ' + mensaje + '\n';
+    }
+    texto += '\n¡Muchas felicidades a los novios! 🎉';
+
+    /* WHATSAPP: número Bolivia 591 79715222 */
+    const numero = '59179715222'; /* ← cambia aquí si el número cambia */
+    const url = 'https://wa.me/' + numero + '?text=' + encodeURIComponent(texto);
+    window.open(url, '_blank', 'noopener');
+  });
+
+  /* ─────────────────────────────────────────
+     ANIMACIONES DE APARICIÓN AL SCROLL
+     (Intersection Observer)
+  ───────────────────────────────────────── */
+  function checkReveal() {
+    const elementos = document.querySelectorAll('.reveal:not(.visible)');
+    if (!elementos.length) return;
+
+    const obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    elementos.forEach(function(el) { obs.observe(el); });
+  }
+
+  /* Iniciar observer una vez que la portada se cierre;
+     si ya está cerrada (no existe portada), iniciar de inmediato */
+  if (!document.getElementById('portada')) {
+    checkReveal();
+  }
+  /* También intentar al cargar por si acaso */
+  window.addEventListener('load', checkReveal);
+
+</script>
+
+</body>
+</html>
