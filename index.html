@@ -10,7 +10,7 @@
   ═══════════════════════════════════════════════════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Marcellus&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
     /* ════════════════════════════════════════════════════
@@ -27,8 +27,8 @@
       --texto:          #4A2410;
 
       --font-title:  'Marcellus', serif;
-      --font-body:   'Lora', serif;
-      --font-script: 'Alex Brush', cursive;
+      --font-body:   'Cormorant Garamond', Georgia, serif;
+      --font-script: 'Marcellus', serif;
 
       /* ── FOTO DE LA PAREJA — cambia solo esta URL ── */
       --foto-pareja: url('foto-pareja.jpg'); /* imagen de la pareja */
@@ -55,7 +55,7 @@
     /* ════════════════════════════════════════════════════
        UTILIDADES
     ════════════════════════════════════════════════════ */
-    .text-script  { font-family: var(--font-script); }
+    .text-script  { font-family: var(--font-title); }
     .text-title   { font-family: var(--font-title); }
     .text-body    { font-family: var(--font-body); }
     .text-terra   { color: var(--terracota); }
@@ -203,7 +203,7 @@
     .sobre-carta.elevada { transform: translateY(-28px); }
 
     .carta-nombres {
-      font-family: var(--font-script);
+      font-family: var(--font-title);
       font-size: clamp(18px, 5vw, 26px);
       color: var(--terracota);
       line-height: 1.1;
@@ -240,14 +240,14 @@
     .sobre-sello.desvanecido { opacity: 0; pointer-events: none; }
 
     .sello-texto {
-      font-family: var(--font-script);
+      font-family: var(--font-title);
       font-size: clamp(16px, 4.5vw, 22px);
       color: var(--terracota);
     }
 
     .portada-hint {
       font-family: var(--font-body);
-      font-style: italic;
+      
       font-size: clamp(12px, 3.5vw, 14px);
       color: var(--texto);
       opacity: .65;
@@ -284,7 +284,7 @@
       justify-content: center;
       color: rgba(255,255,255,.4);
       font-family: var(--font-body);
-      font-style: italic;
+      
       font-size: 14px;
       text-align: center;
       /* ── Coloca aquí la foto: background: url('foto-pareja.jpg') center/cover; ── */
@@ -339,8 +339,8 @@
       line-height: 1;
     }
     .nombre-gabriela {
-      font-family: var(--font-script);
-      font-size: clamp(38px, 11.5vw, 72px);
+      font-family: var(--font-title);
+      font-size: clamp(34px, 10vw, 62px);
       color: var(--terracota);
       text-shadow: 0 2px 10px rgba(255,250,240,.7), 0 0 24px rgba(255,250,240,.5);
       line-height: 1;
@@ -403,17 +403,10 @@
       margin: 0 auto 32px;
       padding: 0 16px;
     }
-    .cita-comilla {
-      font-family: var(--font-body);
-      font-size: 80px;
-      color: var(--beige);
-      line-height: .5;
-      display: block;
-      margin-bottom: 8px;
-    }
+    /* .cita-comilla eliminada */
     .cita-texto {
       font-family: var(--font-body);
-      font-style: italic;
+      
       font-size: clamp(14px, 3.8vw, 17px);
       color: var(--texto);
       line-height: 1.65;
@@ -468,7 +461,7 @@
     }
 
     .padres-script-title {
-      font-family: var(--font-script);
+      font-family: var(--font-title);
       font-size: clamp(32px, 8vw, 48px);
       color: var(--terracota);
       margin-bottom: 28px;
@@ -626,7 +619,7 @@
       margin: 24px auto 0;
       text-align: center;
       font-family: var(--font-body);
-      font-style: italic;
+      
       font-size: clamp(13px, 3.5vw, 15px);
       color: var(--texto);
       opacity: .8;
@@ -655,7 +648,7 @@
     }
 
     .itinerario-dia {
-      font-family: var(--font-script);
+      font-family: var(--font-title);
       font-size: clamp(28px, 7vw, 42px);
       color: var(--crema);
       text-align: center;
@@ -766,14 +759,14 @@
       text-align: center;
     }
     .cancion-nombre {
-      font-family: var(--font-script);
+      font-family: var(--font-title);
       font-size: clamp(22px, 6vw, 32px);
       color: var(--terracota);
       display: block;
     }
     .cancion-artista {
       font-family: var(--font-body);
-      font-style: italic;
+      
       font-size: clamp(13px, 3.5vw, 15px);
       color: var(--texto);
       opacity: .75;
@@ -797,7 +790,7 @@
     }
 
     .confirm-script {
-      font-family: var(--font-script);
+      font-family: var(--font-title);
       font-size: clamp(32px, 8vw, 48px);
       color: var(--terracota);
       display: block;
@@ -806,7 +799,7 @@
 
     .confirm-texto {
       font-family: var(--font-body);
-      font-style: italic;
+      
       font-size: clamp(14px, 3.8vw, 16px);
       color: var(--texto);
       max-width: 440px;
@@ -1008,7 +1001,7 @@
     }
 
     .footer-nombres {
-      font-family: var(--font-script);
+      font-family: var(--font-title);
       font-size: clamp(38px, 10vw, 60px);
       color: var(--terracota);
       display: block;
@@ -1081,13 +1074,13 @@
 
       <!-- Carta dentro del sobre -->
       <div class="sobre-carta" id="sobre-carta">
-        <div class="carta-nombres">Sergio &amp; Gabriela</div>
+        <div class="carta-nombres">Sergio · Gabriela</div>
         <div class="carta-para" id="carta-para-texto">Invitación de boda</div>
       </div>
 
       <!-- Sello clickable -->
       <button class="sobre-sello" id="sobre-sello" aria-label="Toca el sello para abrir la invitación">
-        <span class="sello-texto">S&amp;G</span>
+        <span class="sello-texto">S·G</span>
       </button>
     </div>
   </div>
@@ -1113,7 +1106,7 @@
 
   <div class="nombres-foto" aria-hidden="true">
     <span class="nombre-sergio">Sergio</span>
-    <span class="nombre-gabriela">&amp; Gabriela</span>
+    <span class="nombre-gabriela">Gabriela</span>
   </div>
 </section>
 
@@ -1143,7 +1136,7 @@
   </div>
 
   <div class="cita-wrap reveal">
-    <span class="cita-comilla" aria-hidden="true">"</span>
+    
     <p class="cita-texto">
       De un encuentro inesperado nació un amor que no imaginábamos, una certeza que creció con cada paso y el deseo profundo de elegirnos para compartir la vida.
     </p>
@@ -1513,7 +1506,7 @@
   </div>
 
   <p class="footer-amor reveal">CON AMOR</p>
-  <span class="footer-nombres reveal">Sergio &amp; Gabriela</span>
+  <span class="footer-nombres reveal">Sergio · Gabriela</span>
   <p class="footer-fecha reveal">09 · 01 · 2027</p>
 </footer>
 
