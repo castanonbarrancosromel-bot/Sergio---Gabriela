@@ -1232,34 +1232,73 @@ document.getElementById('form-rsvp').addEventListener('submit',function(e){
   window.open('https://wa.me/59179715222?text='+encodeURIComponent(t),'_blank','noopener');
 });
 
-/* ── REPRODUCTOR YOUTUBE — La promesa, Melendi (ID: 7XPmRUp_Yf4) ── */
-var ytPlayer=null, musicOn=false;
-function loadYTApi(){
-  if(document.getElementById('yt-api'))return;
-  var s=document.createElement('script');
-  s.id='yt-api';s.src='https://www.youtube.com/iframe_api';
+/* ── REPRODUCTOR YOUTUBE — La promesa, Melendi (ID: 7XPmRUp_Yf4) ──
+   La música inicia automáticamente en el primer toque o clic del usuario.
+   Los navegadores no permiten autoplay con sonido sin interacción previa;
+   este código arranca en cuanto el usuario toca cualquier parte de la página.
+   Para cambiar la canción, cambia el ID '7XPmRUp_Yf4' (2 veces abajo).
+─────────────────────────────────────────────────────────────────────── */
+var ytPlayer = null, musicOn = false, playerReady = false, userInteracted = false;
+
+/* 1. Cargar la API de YouTube inmediatamente al abrir la página */
+(function(){
+  var s = document.createElement('script');
+  s.id  = 'yt-api';
+  s.src = 'https://www.youtube.com/iframe_api';
   document.head.appendChild(s);
-}
-window.onYouTubeIframeAPIReady=function(){
-  ytPlayer=new YT.Player('yt-player',{
-    videoId:'7XPmRUp_Yf4', /* ← ID canción */
-    playerVars:{autoplay:0,loop:1,playlist:'7XPmRUp_Yf4',controls:0,rel:0,fs:0},
-    events:{
-      onReady:function(e){e.target.setVolume(80);if(window._play){e.target.playVideo();window._play=false}},
-      onStateChange:function(e){
-        var btn=document.getElementById('btn-musica');
-        musicOn=e.data===YT.PlayerState.PLAYING;
-        btn.innerHTML=musicOn?'&#9835;':'&#9834;';
-        btn.style.background=musicOn?'rgba(61,30,14,.9)':'rgba(122,52,19,.88)';
+})();
+
+/* 2. Cuando la API esté lista, crear el player */
+window.onYouTubeIframeAPIReady = function(){
+  ytPlayer = new YT.Player('yt-player', {
+    videoId: '7XPmRUp_Yf4',   /* ← ID de la canción */
+    playerVars: {
+      autoplay: 0, loop: 1,
+      playlist: '7XPmRUp_Yf4', /* ← mismo ID */
+      controls: 0, rel: 0, fs: 0
+    },
+    events: {
+      onReady: function(e){
+        e.target.setVolume(80);
+        playerReady = true;
+        /* Si el usuario ya tocó la pantalla antes de que el player estuviera listo */
+        if(userInteracted){ e.target.playVideo(); }
+      },
+      onStateChange: function(e){
+        var btn = document.getElementById('btn-musica');
+        musicOn = (e.data === YT.PlayerState.PLAYING);
+        btn.innerHTML = musicOn ? '&#9835;' : '&#9834;';
+        btn.style.background = musicOn ? 'rgba(61,30,14,.9)' : 'rgba(122,52,19,.88)';
+        btn.style.animation   = musicOn ? 'none' : '';
       }
     }
   });
 };
-function toggleMusica(){
-  if(!ytPlayer){window._play=true;loadYTApi();return}
-  musicOn?ytPlayer.pauseVideo():ytPlayer.playVideo();
+
+/* 3. En el PRIMER toque o clic del usuario — arrancar música automáticamente */
+function onPrimerContacto(){
+  userInteracted = true;
+  if(playerReady && ytPlayer && !musicOn){
+    ytPlayer.playVideo();
+  }
+  /* Eliminar los listeners tras el primer uso */
+  document.removeEventListener('click',    onPrimerContacto);
+  document.removeEventListener('touchstart', onPrimerContacto);
+  document.removeEventListener('keydown',  onPrimerContacto);
 }
-document.getElementById('btn-musica').addEventListener('click',toggleMusica);
+document.addEventListener('click',     onPrimerContacto, {once:true, passive:true});
+document.addEventListener('touchstart', onPrimerContacto, {once:true, passive:true});
+document.addEventListener('keydown',   onPrimerContacto, {once:true, passive:true});
+
+/* 4. Botón ♪ — play / pausa manual */
+function toggleMusica(){
+  if(!playerReady || !ytPlayer){ userInteracted=true; return; }
+  musicOn ? ytPlayer.pauseVideo() : ytPlayer.playVideo();
+}
+document.getElementById('btn-musica').addEventListener('click', function(e){
+  e.stopPropagation(); /* evitar doble disparo con onPrimerContacto */
+  toggleMusica();
+});
 
 /* ── SCROLL REVEAL ── */
 var obs=new IntersectionObserver(function(entries){
