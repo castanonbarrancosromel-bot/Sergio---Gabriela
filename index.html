@@ -1049,11 +1049,7 @@
   WHATSAPP: cambia 59179715222 por el número real si es necesario
   YouTube: https://youtu.be/7XPmRUp_Yf4
 -->
-<a id="btn-musica"
-   href="https://youtu.be/7XPmRUp_Yf4"
-   target="_blank"
-   rel="noopener"
-   aria-label="Nuestra canción">♪</a>
+<button id="btn-musica" aria-label="Reproducir nuestra canci&#243;n" title="Nuestra canci&#243;n · La promesa, Melendi">&#9834;</button>
 
 <!-- ═══════════════════════════════════════════
      BANNER DE INVITADO (leído desde la URL)
@@ -1347,11 +1343,7 @@
 <section id="cancion" aria-label="Nuestra canción">
   <p class="cancion-titulo reveal">NUESTRA CANCIÓN</p>
 
-  <a class="vinilo-wrap reveal"
-     href="https://youtu.be/7XPmRUp_Yf4"
-     target="_blank"
-     rel="noopener"
-     aria-label="Escuchar La Promesa de Melendi">
+  <div class="vinilo-wrap reveal" role="button" tabindex="0" aria-label="Reproducir La Promesa de Melendi" onclick="toggleMusica()" onkeydown="if(event.key==='Enter'||event.key===' ')toggleMusica()">
     <!-- Disco de vinilo SVG -->
     <div class="vinilo">
       <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1700,7 +1692,68 @@
   /* También intentar al cargar por si acaso */
   window.addEventListener('load', checkReveal);
 
+
+  /* ─────────────────────────────────────────
+     REPRODUCTOR DE YOUTUBE — MÚSICA EN LA PÁGINA
+     ID del video: 7XPmRUp_Yf4  (La promesa, Melendi)
+     Cambia el ID aquí si cambias la canción.
+  ───────────────────────────────────────── */
+  var ytPlayer = null;
+  var musicaActiva = false;
+
+  function cargarYouTubeAPI() {
+    if (document.getElementById('yt-api-script')) return;
+    var tag = document.createElement('script');
+    tag.id  = 'yt-api-script';
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  }
+
+  window.onYouTubeIframeAPIReady = function() {
+    ytPlayer = new YT.Player('yt-player', {
+      videoId: '7XPmRUp_Yf4',   /* ← cambia aquí el ID si cambias la canción */
+      playerVars: { autoplay: 0, loop: 1, playlist: '7XPmRUp_Yf4', controls: 0, rel: 0, fs: 0 },
+      events: {
+        onReady: function(e) {
+          e.target.setVolume(80);
+          if (window._reproducirAlCargar) { e.target.playVideo(); window._reproducirAlCargar = false; }
+        },
+        onStateChange: function(e) {
+          var btn = document.getElementById('btn-musica');
+          if (e.data === YT.PlayerState.PLAYING) {
+            btn.innerHTML = '&#9835;'; /* ♫ */
+            btn.style.background = 'var(--terracota-dark)';
+            musicaActiva = true;
+          } else {
+            btn.innerHTML = '&#9834;'; /* ♪ */
+            btn.style.background = 'var(--terracota)';
+            musicaActiva = false;
+          }
+        }
+      }
+    });
+  };
+
+  function toggleMusica() {
+    if (!ytPlayer) {
+      window._reproducirAlCargar = true;
+      cargarYouTubeAPI();
+      return;
+    }
+    if (musicaActiva) { ytPlayer.pauseVideo(); } else { ytPlayer.playVideo(); }
+  }
+
+  document.getElementById('btn-musica').addEventListener('click', toggleMusica);
 </script>
 
+
+<!-- ═══════════════════════════════════════════
+     REPRODUCTOR DE YOUTUBE EMBEBIDO (oculto)
+     La música suena dentro de la página al
+     tocar el botón ♪ o el disco de vinilo
+════════════════════════════════════════════ -->
+<div id="yt-player-wrap" style="position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+  <div id="yt-player"></div>
+</div>
 </body>
 </html>
